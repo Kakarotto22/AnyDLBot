@@ -304,7 +304,7 @@ async def youtube_dl_call_back(bot, update):
                     await bot.send_video(
                         chat_id=update.message.chat.id,
                         video=download_directory,
-                        caption=description,
+                        caption=custom_file_name,
                         parse_mode="HTML",
                         duration=duration,
                         width=width,
@@ -324,36 +324,6 @@ async def youtube_dl_call_back(bot, update):
                     LOGGER.info("Did this happen? :\\")
                 end_two = datetime.now()
                 time_taken_for_upload = (end_two - end_one).seconds
-                #
-                media_album_p = []
-                if images is not None:
-                    i = 0
-                    caption = "© @AnyDLBot"
-                    if is_w_f:
-                        caption = "/upgrade to Plan D to remove the watermark\n© @AnyDLBot"
-                    for image in images:
-                        if os.path.exists(image):
-                            if i == 0:
-                                media_album_p.append(
-                                    InputMediaPhoto(
-                                        media=image,
-                                        caption=caption,
-                                        parse_mode="html"
-                                    )
-                                )
-                            else:
-                                media_album_p.append(
-                                    InputMediaPhoto(
-                                        media=image
-                                    )
-                                )
-                            i = i + 1
-                await bot.send_media_group(
-                    chat_id=update.message.chat.id,
-                    disable_notification=True,
-                    reply_to_message_id=update.message.message_id,
-                    media=media_album_p
-                )
             #
             try:
                 shutil.rmtree(tmp_directory_for_each_user)
